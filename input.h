@@ -17,7 +17,7 @@ typedef struct line_st {
     size_t length;
 } input_t;
 
-// Reads the given file and returns it as an array of line_t.
+// Reads the given file and allocates an array of line_t to store the data.
 // It is the client's responsibility to free the input_t * and all subelements
 //  by using InputFree.
 input_t *InputRead(char *filename);

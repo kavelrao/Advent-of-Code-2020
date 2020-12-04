@@ -22,13 +22,14 @@ int main() {
     char *delim = " \n";  // Delimiters that break up passport fields
     size_t maxLine = InputMaxLine(filename);
 
-    // Allocate and zero out temp with null characters so strcpy isn't working on uninitialized memory.
+    // Temp string to copy input lines into for manipulation.
     char *temp = malloc(maxLine + 1);
     if (temp == NULL) {
         InputFree(input);
         fprintf(stderr, "temp malloc failed.");
         return EXIT_FAILURE;
     }
+    // Zero out temp with null characters so strcpy isn't working on uninitialized memory.
     memset(temp, '\0', sizeof(*temp));
 
     for (int i = 0; i < input->length; ++i) {

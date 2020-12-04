@@ -11,6 +11,7 @@ input_t *InputRead(char *filename) {
     // Open file in read mode. On failure return NULL
     fp = fopen(filename, "r");
     if (fp == NULL) {
+        fprintf(stderr, "File \"%s\" does not exist\n", filename);
         return NULL;
     }
 
@@ -33,7 +34,13 @@ input_t *InputRead(char *filename) {
 
     // Read file line by line, writing the buffer to result->arr.
     for (i = 0; i < result->length; ++i) {
+        // Allocate result->arr[i]. On failure, free result, close file, and return NULL.
         result->arr[i] = malloc(BUFFER_LENGTH);
+        if (result->arr[i] == NULL) {
+            InputFree(result);
+            fclose(fp);
+            return NULL;
+        }
         fgets(result->arr[i], BUFFER_LENGTH, fp);
     }
 

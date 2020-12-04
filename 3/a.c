@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "../input.h"
 
 int main() {
-    int target = 2020;
     int result = 0;
 
     input_t *input = InputRead("input.txt");
@@ -11,13 +11,16 @@ int main() {
         return EXIT_FAILURE;
     }
 
+    int col = 0;
+    size_t lineLength = strlen(input->arr[0]) - 2;  // -2 because of padding
     for (int i = 0; i < input->length; ++i) {
-        for (int j = 0; j < input->length; ++j) {
-            int n1 = atoi(input->arr[i]);
-            int n2 = atoi(input->arr[j]);
-            if (n1 + n2 == target)
-                result = n1 * n2;
+        if (col >= lineLength) {
+            col = col - lineLength;
         }
+        if (input->arr[i][col] == '#') {
+            result++;
+        }
+        col = col + 3;
     }
 
     printf("%d\n", result);

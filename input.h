@@ -5,8 +5,6 @@
 #ifndef INPUT_H_
 #define INPUT_H_
 
-// The maximum line size for InputRead
-#define BUFFER_LENGTH 128
 
 // Represents a single line of the input file.
 typedef char *line_t;
@@ -24,6 +22,9 @@ input_t *InputRead(char *filename);
 
 // Returns the number of lines in the given file
 size_t InputSize(char *filename);
+
+// Returns the maximum number of characters in a line in the given file.
+size_t InputMaxLine(char *filename);
 
 // Frees the input and all lines within it
 void InputFree(input_t *input);

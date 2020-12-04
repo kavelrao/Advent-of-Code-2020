@@ -33,15 +33,16 @@ input_t *InputRead(char *filename) {
     }
 
     // Read file line by line, writing the buffer to result->arr.
+    size_t maxLine = InputMaxLine(filename);
     for (i = 0; i < result->length; ++i) {
         // Allocate result->arr[i]. On failure, free result, close file, and return NULL.
-        result->arr[i] = malloc(BUFFER_LENGTH);
+        result->arr[i] = malloc(maxLine + 1);
         if (result->arr[i] == NULL) {
             InputFree(result);
             fclose(fp);
             return NULL;
         }
-        fgets(result->arr[i], BUFFER_LENGTH, fp);
+        fgets(result->arr[i], maxLine + 1, fp);
     }
 
     fclose(fp);
@@ -70,6 +71,34 @@ size_t InputSize(char *filename) {
 
     fclose(fp);
     return result;
+}
+
+size_t InputMaxLine(char *filename) {
+    FILE *fp;
+    size_t max;
+    size_t current;
+    char ch;
+
+    // Open the file in read mode. On failure, return 0.
+    fp = fopen(filename, "r");
+    if (fp == NULL) {
+        fprintf(stderr, "File \"%s\" does not exist\n", filename);
+        return 0;
+    }
+
+    max = 0;
+    current = 0;
+    // Read file by character, searching for '\n'.
+    while ((ch = fgetc(fp)) != EOF) {
+        current++;
+        if (ch == '\n') {
+            if (current > max)
+                max = current;
+            current = 0;
+        }
+    }
+
+    return max;
 }
 
 void InputFree(input_t *input) {

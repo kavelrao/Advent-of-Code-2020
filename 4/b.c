@@ -23,14 +23,12 @@ int main() {
     size_t maxLine = InputMaxLine(filename);
 
     // Temp string to copy input lines into for manipulation.
-    char *temp = malloc(maxLine + 1);
+    char *temp = calloc((maxLine + 1), sizeof(char));
     if (temp == NULL) {
         InputFree(input);
-        fprintf(stderr, "temp malloc failed.");
+        fprintf(stderr, "temp alloc failed.");
         return EXIT_FAILURE;
     }
-    // Zero out temp with null characters so strcpy isn't working on uninitialized memory.
-    memset(temp, '\0', sizeof(*temp));
 
     for (int i = 0; i < input->length; ++i) {
         // Goes through each line, looking for the keys.

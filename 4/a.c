@@ -6,7 +6,6 @@
 
 int main() {
     int result = 0;
-    int count = 0;
 
     input_t *input = InputRead("input.txt");
 
@@ -42,7 +41,6 @@ int main() {
         }
 
         if (input->arr[i][0] == '\n' || i == input->length - 1) {
-            count++;
             if (byr && iyr && eyr && hgt && hcl && ecl && pid) {
                 result++;
             }

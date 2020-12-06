@@ -40,6 +40,7 @@ int main() {
     }
 
     printf("result: %d\n", result);
+
     InputFree(input);
     return EXIT_SUCCESS;
 }

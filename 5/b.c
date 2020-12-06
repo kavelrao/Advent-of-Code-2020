@@ -27,7 +27,7 @@ int main() {
         fprintf(stderr, "ids alloc failed.");
         return EXIT_FAILURE;
     }
-    
+
     idsLength = 0;
 
     for (i = 0; i < input->length; ++i) {
@@ -70,6 +70,7 @@ int main() {
 
 
     printf("result: %d\n", result);
+
     free(ids);
     InputFree(input);
     return EXIT_SUCCESS;

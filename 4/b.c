@@ -18,6 +18,14 @@ int main() {
          hcl = false,
          ecl = false,
          pid = false;
+    
+    char *byrVal,
+         *iyrVal,
+         *eyrVal,
+         *hgtVal,
+         *hclVal,
+         *eclVal,
+         *pidVal;
 
     char *delim = " \n";  // Delimiters that break up passport fields
     size_t maxLine = InputMaxLine(filename);
@@ -38,21 +46,21 @@ int main() {
         // byr: four digits; min 1920, max 2002
         if (strstr(input->arr[i], "byr:") != NULL) {
             strcpy(temp, input->arr[i]);
-            char *byrVal = strtok(strstr(temp, "byr:") + 4, delim);
+            byrVal = strtok(strstr(temp, "byr:") + 4, delim);
             if (strlen(byrVal) == 4)
                 byr = atoi(byrVal) <= 2002 && atoi(byrVal) >= 1920;
         }
         // iyr: four digits; min 2010, max 2020
         if (strstr(input->arr[i], "iyr:") != NULL) {
             strcpy(temp, input->arr[i]);
-            char *iyrVal = strtok(strstr(temp, "iyr:") + 4, delim);
+            iyrVal = strtok(strstr(temp, "iyr:") + 4, delim);
             if (strlen(iyrVal) == 4)
                 iyr = atoi(iyrVal) <= 2020 && atoi(iyrVal) >= 2010;
         }
         // eyr: four digits; min 2020, max 2030
         if (strstr(input->arr[i], "eyr:") != NULL) {
             strcpy(temp, input->arr[i]);
-            char *eyrVal = strtok(strstr(temp, "eyr:") + 4, delim);
+            eyrVal = strtok(strstr(temp, "eyr:") + 4, delim);
             if (strlen(eyrVal) == 4)
                 eyr = atoi(eyrVal) <= 2030 && atoi(eyrVal) >= 2020;
         }
@@ -61,7 +69,7 @@ int main() {
             // if "in": min 59, max 76
         if (strstr(input->arr[i], "hgt:") != NULL) {
             strcpy(temp, input->arr[i]);
-            char *hgtVal = strtok(strstr(temp, "hgt:") + 4, delim);
+            hgtVal = strtok(strstr(temp, "hgt:") + 4, delim);
             char *units = hgtVal + (strlen(hgtVal) - 2);
             if (strcmp(units, "cm") == 0) {
                 hgt = atoi(strtok(hgtVal, "c")) >= 150 && atoi(strtok(hgtVal, "c")) <= 193;
@@ -73,7 +81,7 @@ int main() {
         // hcl: # followed by exactly 6 characters 0-9 or a-f
         if (strstr(input->arr[i], "hcl:") != NULL) {
             strcpy(temp, input->arr[i]);
-            char *hclVal = strtok(strstr(temp, "hcl:") + 4, delim);
+            hclVal = strtok(strstr(temp, "hcl:") + 4, delim);
             if (hclVal[0] == '#') {
                 hclVal++;
                 if ( (strlen(hclVal) == 6) && (strtol(hclVal, NULL, 16) != 0) ) {
@@ -84,7 +92,7 @@ int main() {
         // ecl: must be one of {amb, blu, brn, gry, grn, hzl, oth}
         if (strstr(input->arr[i], "ecl:") != NULL) {
             strcpy(temp, input->arr[i]);
-            char *eclVal = strtok(strstr(temp, "ecl:") + 4, delim);
+            eclVal = strtok(strstr(temp, "ecl:") + 4, delim);
             ecl = (strcmp(eclVal, "amb") == 0) || (strcmp(eclVal, "blu") == 0) ||
                   (strcmp(eclVal, "brn") == 0) || (strcmp(eclVal, "gry") == 0) ||
                   (strcmp(eclVal, "grn") == 0) || (strcmp(eclVal, "hzl") == 0) ||
@@ -93,7 +101,7 @@ int main() {
         // pid: nine digit number
         if (strstr(input->arr[i], "pid:") != NULL) {
             strcpy(temp, input->arr[i]);
-            char *pidVal = strtok(strstr(temp, "pid:") + 4, delim);
+            pidVal = strtok(strstr(temp, "pid:") + 4, delim);
             pid = (strlen(pidVal) == 9) && (atoi(pidVal) != 0);
         }
 
@@ -116,7 +124,6 @@ int main() {
 
 
     printf("result: %d\n", result);
-    printf("total count: %d\n", count);
 
     free(temp);
     InputFree(input);

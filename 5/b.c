@@ -22,7 +22,14 @@ int main() {
     input_t *input = InputRead("input.txt");
 
     ids = calloc(input->length, sizeof(*ids));
+    if (ids == NULL) {
+        InputFree(input);
+        fprintf(stderr, "ids alloc failed.");
+        return EXIT_FAILURE;
+    }
+    
     idsLength = 0;
+
     for (i = 0; i < input->length; ++i) {
         for (j = 0; j < 7; ++j) {
             if (input->arr[i][j] == 'F')

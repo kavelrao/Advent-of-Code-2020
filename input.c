@@ -98,6 +98,7 @@ size_t InputMaxLine(char *filename) {
         }
     }
 
+    fclose(fp);
     return max;
 }
 

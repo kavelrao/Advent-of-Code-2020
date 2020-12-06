@@ -58,7 +58,7 @@ int main() {
 
 
     printf("result: %d\n", result);
-    printf("total count: %d\n", count);
+
     InputFree(input);
     return EXIT_SUCCESS;
 }

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
+#include <string.h>
 
 #ifndef INPUT_H_
 #define INPUT_H_
@@ -15,13 +15,21 @@ typedef struct line_st {
     size_t length;
 } input_t;
 
-// Reads the given file and allocates an array of line_t to store the data.
-// It is the client's responsibility to free the input_t * and all subelements
-//  by using InputFree.
+// Reads the given file and allocates an array of line_t to store the data line by line.
+// It is the client's responsibility to free the input_t * and all subelements by using InputFree.
 input_t *InputRead(char *filename);
 
-// Returns the number of lines in the given file
+// Reads the given file and allocates an array of line_t to store the data.
+// Array elements are divided by blank lines (double newlines) in the file.
+// Lines may have newline characters in them where there were single newlines in the file.
+// It is the client's responsibility to free the input_t * and all subelements by using InputFree.
+input_t *InputReadBlankLines(char *filename);
+
+// Returns the number of lines in the given file.
 size_t InputSize(char *filename);
+
+// Returns the number of blank lines in the given file.
+size_t InputSizeBlankLines(char *filename);
 
 // Returns the maximum number of characters in a line in the given file.
 size_t InputMaxLine(char *filename);

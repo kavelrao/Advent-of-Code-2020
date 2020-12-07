@@ -10,7 +10,7 @@ int main() {
     int count = 0;
     int members = 1;
     char yes[LETTERS + 1];
-    int yesCount[LETTERS + 1];
+    int yesCount[LETTERS];
     int i;
     int j;
 

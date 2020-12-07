@@ -1,10 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+/*
+    Functions used for handling file inputs.
+    Can be used to obtain array representations of a file or information about a file.
+*/
 
 #ifndef INPUT_H_
 #define INPUT_H_
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 // Represents a single line of the input file.
 typedef char *line_t;
@@ -28,7 +32,7 @@ input_t *InputReadBlankLines(char *filename);
 // Returns the number of lines in the given file.
 size_t InputSize(char *filename);
 
-// Returns the number of blank lines in the given file.
+// Returns the number of elements in the given file, separated by double newlines.
 size_t InputSizeBlankLines(char *filename);
 
 // Returns the maximum number of characters in a line in the given file.

@@ -1,14 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "input.h"
 
 input_t *InputRead(char *filename) {
     FILE *fp;
     int i;
     input_t *result;
+    size_t maxLine;
 
-    // Open file in read mode. On failure return NULL
+    // Open file in read mode. On failure return NULL.
     fp = fopen(filename, "r");
     if (fp == NULL) {
         fprintf(stderr, "File \"%s\" does not exist\n", filename);
@@ -32,8 +30,8 @@ input_t *InputRead(char *filename) {
         return NULL;
     }
 
+    maxLine = InputMaxLine(filename);
     // Read file line by line, writing the buffer to result->arr.
-    size_t maxLine = InputMaxLine(filename);
     for (i = 0; i < result->length; ++i) {
         // Allocate result->arr[i]. On failure, free result, close file, and return NULL.
         result->arr[i] = calloc(maxLine + 1, sizeof(*(result->arr[i])));
@@ -56,10 +54,9 @@ input_t *InputReadBlankLines(char *filename) {
     char ch1;
     char ch2;
     input_t *result;
+    size_t maxLine;
 
-    size_t maxLine = InputMaxLine(filename);
-
-    // Open file in read mode. On failure return NULL
+    // Open file in read mode. On failure return NULL.
     fp = fopen(filename, "r");
     if (fp == NULL) {
         fprintf(stderr, "File \"%s\" does not exist\n", filename);
@@ -83,11 +80,14 @@ input_t *InputReadBlankLines(char *filename) {
         return NULL;
     }
 
-    i = 0;
     // ch1 is to put into result->arr.
     // ch2 is to check for consecutive \n chars.
     ch1 = fgetc(fp);
     ch2 = fgetc(fp);
+
+    i = 0;
+    maxLine = InputMaxLine(filename);
+    // Parse file by character, moving to the next array element on double newlines.
     while (ch2 != EOF) {
         // Allocate result->arr[i]. On failure, free result, close file, and return NULL.
         result->arr[i] = calloc(maxLine + 1, sizeof(*(result->arr[i])));
@@ -97,8 +97,7 @@ input_t *InputReadBlankLines(char *filename) {
             return NULL;
         }
 
-        // As long as we don't have double \n or EOF,
-        // read file by character, ignoring newlines.
+        // As long as we don't have double newline or EOF, read file by character, ignoring newlines.
         j = 0;
         while ( !(ch1 == '\n' && ch2 == '\n') && ch2 != EOF) {
             // If result->arr[i] is full, reallocate to double the size.
@@ -120,7 +119,7 @@ input_t *InputReadBlankLines(char *filename) {
             ch2 = fgetc(fp);
         }
 
-        // Add null terminator and advance ch1 and ch2, skipping newlines
+        // Add null terminator and advance ch1 and ch2, skipping newlines.
         result->arr[i][j] = '\0';
         ch1 = fgetc(fp);
         ch2 = fgetc(fp);
@@ -177,7 +176,7 @@ size_t InputSizeBlankLines(char *filename) {
         }
         ch1 = ch2;
     }
-    // Add one more for the final group
+    // Add one more for the final group that has no trailing \n\n.
     result++;
 
     fclose(fp);
@@ -215,11 +214,11 @@ size_t InputMaxLine(char *filename) {
 
 void InputFree(input_t *input) {
     for (int i = 0; i < input->length; ++i) {
-        if (input->arr[i] == NULL) {
-            break;
+        if (input->arr[i] != NULL) {
+            free(input->arr[i]);
         }
-        free(input->arr[i]);
     }
+
     free(input->arr);
     free(input);
 }

@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "../input.h"
+#include "../strings.h"
 
 
 #define FB 7
@@ -16,7 +17,7 @@ int main() {
     char fb[FB + 1];
     char rl[RL + 1];
 
-    input_t *input = InputRead("input.txt");
+    strarr_t *input = InputRead("input.txt");
 
     for (i = 0; i < input->length; ++i) {
         for (j = 0; j < 7; ++j) {
@@ -41,6 +42,6 @@ int main() {
 
     printf("result: %d\n", result);
 
-    InputFree(input);
+    StrArrFree(input);
     return EXIT_SUCCESS;
 }

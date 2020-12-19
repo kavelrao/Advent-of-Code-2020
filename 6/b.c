@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../input.h"
+#include "../strings.h"
 
 
 #define LETTERS 26
@@ -14,7 +15,7 @@ int main() {
     int i;
     int j;
 
-    input_t *input = InputReadBlankLines("input.txt");
+    strarr_t *input = InputReadBlankLines("input.txt");
 
     for (i = 0; i < input->length; ++i) {
         for (j = 0; j < strlen(input->arr[i]); ++j) {
@@ -44,6 +45,6 @@ int main() {
 
     printf("result: %d\n", result);
 
-    InputFree(input);
+    StrArrFree(input);
     return EXIT_SUCCESS;
 }

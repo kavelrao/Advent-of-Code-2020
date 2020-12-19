@@ -3,11 +3,12 @@
 #include <string.h>
 #include <stdbool.h>
 #include "../input.h"
+#include "../strings.h"
 
 int main() {
     int result = 0;
 
-    input_t *input = InputRead("input.txt");
+    strarr_t *input = InputRead("input.txt");
 
     bool byr = false,
          iyr = false,
@@ -57,6 +58,6 @@ int main() {
 
     printf("result: %d\n", result);
 
-    InputFree(input);
+    StrArr(input);
     return EXIT_SUCCESS;
 }

@@ -3,13 +3,14 @@
 #include <string.h>
 #include <stdbool.h>
 #include "../input.h"
+#include "../strings.h"
 
 int main() {
     int result = 0;
     int count = 0;
     char *filename = "input.txt";
 
-    input_t *input = InputRead(filename);
+    strarr_t *input = InputRead(filename);
 
     bool byr = false,
          iyr = false,
@@ -126,6 +127,6 @@ int main() {
     printf("result: %d\n", result);
 
     free(temp);
-    InputFree(input);
+    StrArrFree(input);
     return EXIT_SUCCESS;
 }

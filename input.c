@@ -1,9 +1,9 @@
 #include "input.h"
 
-input_t *InputRead(char *filename) {
+strarr_t *InputRead(char *filename) {
     FILE *fp;
     int i;
-    input_t *result;
+    strarr_t *result;
     size_t maxLine;
 
     // Open file in read mode. On failure return NULL.
@@ -13,8 +13,8 @@ input_t *InputRead(char *filename) {
         return NULL;
     }
 
-    // Allocate input_t *result. On failure, close file and return NULL.
-    result = malloc(sizeof(input_t));
+    // Allocate strarr_t *result. On failure, close file and return NULL.
+    result = malloc(sizeof(strarr_t));
     if (result == NULL) {
         fclose(fp);
         return NULL;
@@ -23,7 +23,7 @@ input_t *InputRead(char *filename) {
     result->length = InputSize(filename);
 
     // Allocate result->arr. On failure, free result, close file, and return NULL.
-    result->arr = malloc(result->length * sizeof(line_t));
+    result->arr = malloc(result->length * sizeof(string_t));
     if (result->arr == NULL) {
         free(result);
         fclose(fp);
@@ -36,7 +36,7 @@ input_t *InputRead(char *filename) {
         // Allocate result->arr[i]. On failure, free result, close file, and return NULL.
         result->arr[i] = calloc(maxLine + 1, sizeof(*(result->arr[i])));
         if (result->arr[i] == NULL) {
-            InputFree(result);
+            StrArrFree(result);
             fclose(fp);
             return NULL;
         }
@@ -47,13 +47,13 @@ input_t *InputRead(char *filename) {
     return result;
 }
 
-input_t *InputReadBlankLines(char *filename) {
+strarr_t *InputReadBlankLines(char *filename) {
     FILE *fp;
     int i;
     int j;
     char ch1;
     char ch2;
-    input_t *result;
+    strarr_t *result;
     size_t maxLine;
 
     // Open file in read mode. On failure return NULL.
@@ -63,8 +63,8 @@ input_t *InputReadBlankLines(char *filename) {
         return NULL;
     }
 
-    // Allocate input_t *result. On failure, close file and return NULL.
-    result = malloc(sizeof(input_t));
+    // Allocate strarr_t *result. On failure, close file and return NULL.
+    result = malloc(sizeof(strarr_t));
     if (result == NULL) {
         fclose(fp);
         return NULL;
@@ -73,7 +73,7 @@ input_t *InputReadBlankLines(char *filename) {
     result->length = InputSizeBlankLines(filename);
 
     // Allocate result->arr. On failure, free result, close file, and return NULL.
-    result->arr = malloc(result->length * sizeof(line_t));
+    result->arr = malloc(result->length * sizeof(string_t));
     if (result->arr == NULL) {
         free(result);
         fclose(fp);
@@ -92,7 +92,7 @@ input_t *InputReadBlankLines(char *filename) {
         // Allocate result->arr[i]. On failure, free result, close file, and return NULL.
         result->arr[i] = calloc(maxLine + 1, sizeof(*(result->arr[i])));
         if (result->arr[i] == NULL) {
-            InputFree(result);
+            StrArrFree(result);
             fclose(fp);
             return NULL;
         }
@@ -106,7 +106,7 @@ input_t *InputReadBlankLines(char *filename) {
                 maxLine = maxLine * 2 + 1;
                 result->arr[i] = realloc(result->arr[i], maxLine);
                 if (result->arr[i] == NULL) {
-                    InputFree(result);
+                    StrArrFree(result);
                     fclose(fp);
                     return NULL;
                 }
@@ -210,15 +210,4 @@ size_t InputMaxLine(char *filename) {
 
     fclose(fp);
     return max;
-}
-
-void InputFree(input_t *input) {
-    for (int i = 0; i < input->length; ++i) {
-        if (input->arr[i] != NULL) {
-            free(input->arr[i]);
-        }
-    }
-
-    free(input->arr);
-    free(input);
 }

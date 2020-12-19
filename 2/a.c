@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../input.h"
+#include "../strings.h"
 
 int main() {
     int result = 0;
 
-    input_t *input = InputRead("input.txt");
+    strarr_t *input = InputRead("input.txt");
     if (input == NULL) {
         return EXIT_FAILURE;
     }
@@ -32,6 +33,6 @@ int main() {
 
     printf("%d\n", result);
 
-    InputFree(input);
+    StrArrFree(input);
     return EXIT_SUCCESS;
 }

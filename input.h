@@ -1,7 +1,7 @@
 /*
-    Functions used for handling file inputs.
-    Can be used to obtain array representations of a file or information about a file.
-*/
+ *    Functions used for handling file inputs.
+ *    Can be used to obtain array representations of a file or information about a file.
+ */
 
 #ifndef INPUT_H_
 #define INPUT_H_

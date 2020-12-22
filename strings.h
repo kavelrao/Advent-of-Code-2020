@@ -1,6 +1,6 @@
 /*
-    Functions used for manipulating strings.
-*/
+ *    Functions used for manipulating strings.
+ */
 
 #ifndef STRINGS_H_
 #define STRINGS_H_

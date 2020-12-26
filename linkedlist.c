@@ -119,6 +119,21 @@ bool LinkedListContainsValue(linkedlist_t *list, void *data) {
     return false;
 }
 
+bool LinkedListContainsString(linkedlist_t *list, char *string) {
+    if (list == NULL) {
+        return false;
+    }
+
+    node_t *current = list->root;
+    while (current != NULL) {
+        if (strcmp((char *) (current->data), string) == 0) {
+            return true;
+        }
+        current = current->next;
+    }
+    return false;
+}
+
 bool LinkedListRemoveNode(linkedlist_t *list, node_t *node) {
     if (!LinkedListContainsNode(list, node)) {
         return false;

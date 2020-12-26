@@ -22,6 +22,7 @@ typedef struct string_st {
 } strarr_t;
 
 // Returns the given string as an array, split by all characters in the given delims string.
+// The resulting strarr_t* must be freed by the user with StrArrFree.
 strarr_t *StringSplit(string_t str, string_t separator);
 
 int SubStringCount(string_t str, string_t sub);

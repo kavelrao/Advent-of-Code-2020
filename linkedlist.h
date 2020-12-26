@@ -8,6 +8,7 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 // Represents a single node in a linked list.
 // Stores a pointer to previous node, pointer to next node, and void pointer to data field.
@@ -26,6 +27,7 @@ typedef struct linkedlist_st {
 
 // Allocates a new linked list and returns a pointer to the list.
 // Root node is initialized to NULL.
+// The user must free the linked_list* using LinkedListFree.
 linkedlist_t *LinkedListCreate();
 
 // Returns a pointer to the node at the given index.
@@ -53,6 +55,10 @@ bool LinkedListContainsNode(linkedlist_t *list, node_t *node);
 
 // Returns true if the given data value is included in the list.
 bool LinkedListContainsValue(linkedlist_t *list, void *data);
+
+// Returns true if the given string is included in the list.
+// Should only be used when storing char* in the list.
+bool LinkedListContainsString(linkedlist_t *list, char *string);
 
 // Removes the given node from the list it's in.
 // Returns true for success.

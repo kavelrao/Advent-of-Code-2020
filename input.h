@@ -12,13 +12,13 @@
 #include "strings.h"
 
 // Reads the given file and allocates an array of line_t to store the data line by line.
-// It is the client's responsibility to free the input_t * and all subelements by using InputFree.
+// It is the client's responsibility to free the strarr_t*.
 strarr_t *InputRead(char *filename);
 
 // Reads the given file and allocates an array of line_t to store the data.
 // Array elements are divided by blank lines (double newlines) in the file.
 // Lines may have newline characters in them where there were single newlines in the file.
-// It is the client's responsibility to free the input_t * and all subelements by using InputFree.
+// It is the client's responsibility to free the strarr_t*.
 strarr_t *InputReadBlankLines(char *filename);
 
 // Returns the number of lines in the given file.
